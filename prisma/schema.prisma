@@ -1,0 +1,41 @@
+// output is required in prisma 7: https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions/upgrading-to-prisma-7#driver-adapters-and-client-instantiation
+generator client {
+  provider = "prisma-client"
+  // can't use @/ here; must use ../src/
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name          String?
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  // role          UserRole  @default(USER)
+  banned        Boolean?  @default(false)
+  banReason     String?
+  banExpires    DateTime?
+
+  // sessions Session[]
+  // accounts Account[]
+  // posts    Post[]
+
+  // @@map("users")
+}
+
+model Weather {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // locationName
+  // lat
+  // long
+}

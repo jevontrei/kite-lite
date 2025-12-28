@@ -1,3 +1,29 @@
+
+# JVT
+
+note to self:
+
+- db regions may mismatch. if having issues, check that. i chose sydney for neon in the browser, but sydney wasn't available for... prisma? when i was setting up prisma in the terminal
+
+```sh
+# things i had to do (in probably the wrong order)
+
+somehow installed shadcn
+somehow installed input button label sonner
+
+somehow installed prisma
+somehow installed better-auth
+
+npx prisma db push
+npx prisma generate
+npm i --save-dev @types/pg
+npm i @prisma/adapter-pg
+npm install openmeteo
+
+```
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
