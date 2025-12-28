@@ -30,8 +30,8 @@ export const GetStartedButton = () => {
   }
 
   // session might be null
-  // dynamically render a link based on the session; either link to profile if you have a session, or login if not
-  const href = session ? "/profile" : "/auth/login";
+  // dynamically render a link based on the session; either link to /weather if you have a session, or login if not
+  const href = session ? "/weather" : "/auth/login";
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -44,7 +44,7 @@ export const GetStartedButton = () => {
         <p className="flex items-center gap-2">
           <span
             data-role={session.user.role}
-            // change colour of dot dependong on user's role; this was done to showcase that we now have access to the user's role in the client side, thanks to inferAdditionalFields in auth-client.ts
+            // change colour of dot depending on user's role; this was done to showcase that we now have access to the user's role in the client side, thanks to inferAdditionalFields in auth-client.ts
             className="size-4 rounded-full animate-pulse data-[role=USER]:bg-blue-600 data-[role=ADMIN]:bg-red-600"
           />
           Welcome back, {session.user.name}! 👋

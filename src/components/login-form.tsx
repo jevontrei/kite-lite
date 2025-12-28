@@ -32,15 +32,20 @@ export const LoginForm = () => {
       setIsPending(false);
     } else {
       toast.success("Login successful. Good to have you back.");
-      router.push("/profile");
+      router.push("/weather");
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-sm w-full space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" name="email" />
+        <Label htmlFor="login-email">Email</Label>
+        <Input
+          type="email"
+          id="login-email"
+          name="email"
+          autoComplete="email"
+        />
       </div>
 
       <div className="space-y-2">
@@ -55,7 +60,12 @@ export const LoginForm = () => {
           </Link>
         </div>
 
-        <Input type="password" id="password" name="password" />
+        <Input
+          type="password"
+          id="password"
+          name="password"
+          autoComplete="current-password"
+        />
       </div>
 
       <Button type="submit" className="w-full" disabled={isPending}>

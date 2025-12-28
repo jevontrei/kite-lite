@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Page() {
   // here we won't bother with the "auth guard" or "session check" that we used in profile/page.tsx; we don't need to protect the auth pages as much as the logged-in profile page
   return (
-    <div className="px-8 py-16 container mx-auto max-w-screen-lg space-y-8">
+    <div className="px-8 py-16 container mx-auto max-w-5xl space-y-8">
       <div className="space-y-8">
         <ReturnButton href="/" label="Home" />
 
@@ -19,10 +19,21 @@ export default function Page() {
 
         <LoginForm />
 
-        <p className="text-muted-foreground text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/register" className="hover:text-foreground">
-            Register
+        <p>
+          <Link
+            href="/auth/register"
+            className="text-muted-foreground text-sm hover:text-foreground"
+          >
+            Don&apos;t have an account? Register
+          </Link>
+        </p>
+
+        <p>
+          <Link
+            href="/weather"
+            className="text-muted-foreground text-sm hover:text-foreground"
+          >
+            Continue as a guest
           </Link>
         </p>
 

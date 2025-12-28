@@ -36,7 +36,7 @@ export default function SearchForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-sm w-full space-y-4 border-8 border-transparent p-8"
+      className="max-w-sm w-full space-y-4 border-8 border-transparent"
     >
       {/* htmlFor should match the id of the <Input/> */}
       <Label htmlFor="latitude" className="mb-2">

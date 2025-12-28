@@ -29,6 +29,7 @@ export async function proxy(req: NextRequest) {
   // i.e. the boolean version of sessionCookie
   // this is where we check for the EXISTENCE of the cookie, and nothing else
   const isLoggedIn = !!sessionCookie;
+
   // this is a boolean - if you're on a particular route or not
   const isOnProtectedRoute = protectedRoutes.includes(nextUrl.pathname);
   const isOnAuthRoute = nextUrl.pathname.startsWith("/auth");
@@ -37,9 +38,9 @@ export async function proxy(req: NextRequest) {
   if (isOnProtectedRoute && !isLoggedIn) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
-  // if you ARE logged, you shouldn't still be on auth route; go to profile page
+  // if you ARE logged in, you shouldn't still be on auth route; go to profile (or weather?) page
   if (isOnAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/profile", req.url));
+    return NextResponse.redirect(new URL("/weather", req.url));
   }
   // otherwise, let the request proceed; for public routes etc
   return res;

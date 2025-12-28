@@ -1,4 +1,6 @@
-import { UserRole } from "@prisma/client";
+// this needs to be changed to @/generated/prisma/client
+// import { UserRole } from "@prisma/client";
+import { UserRole } from "@/generated/prisma/client";
 import { createAccessControl } from "better-auth/plugins/access";
 import { defaultStatements, adminAc } from "better-auth/plugins/admin/access";
 

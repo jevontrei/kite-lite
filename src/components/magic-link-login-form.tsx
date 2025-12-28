@@ -24,7 +24,7 @@ export const MagicLinkLoginForm = () => {
     await signIn.magicLink({
       email,
       name: email.split("@")[0],
-      callbackURL: "/profile",
+      callbackURL: "/weather",
       fetchOptions: {
         onRequest: () => {
           setIsPending(true);
@@ -56,14 +56,14 @@ export const MagicLinkLoginForm = () => {
       </summary>
 
       <form onSubmit={handleSubmit} className="px-2 py-1">
-        <Label htmlFor="email" className="sr-only">
+        <Label htmlFor="magic-link-email" className="sr-only">
           Email
         </Label>
 
         <div className="flex gap-2 items-center">
           <Input
             type="email"
-            id="email"
+            id="magic-link-email"
             name="email"
             placeholder="Enter your email"
           />

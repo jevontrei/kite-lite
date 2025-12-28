@@ -40,8 +40,8 @@ export const RegisterForm = () => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" name="email" />
+        <Label htmlFor="register-email">Email</Label>
+        <Input type="email" id="register-email" name="email" />
       </div>
 
       <div className="space-y-2">

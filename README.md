@@ -21,6 +21,12 @@ Stack:
   - hash: argon
   - 
 
+TODO:
+
+- finish .env
+- allow user to specify ERA5 etc
+- handle an array of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
+
 Notes to self:
 
 - db regions may mismatch. if having issues, check that. i chose sydney for neon in the browser, but sydney wasn't available for... prisma? when i was setting up prisma in the terminal
@@ -35,6 +41,9 @@ somehow installed better-auth
 
 npx prisma db push
 npx prisma generate
+npx prisma db push
+npx prisma generate?
+
 npm i --save-dev @types/pg
 npm i @prisma/adapter-pg
 npm i openmeteo

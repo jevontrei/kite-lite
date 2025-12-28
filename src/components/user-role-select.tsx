@@ -1,7 +1,9 @@
 "use client";
 
 import { admin } from "@/lib/auth-client";
-import { UserRole } from "@prisma/client";
+// this needs to be changed to @/generated/prisma/client
+// import { UserRole } from "@prisma/client";
+import { UserRole } from "@/generated/prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -25,8 +27,6 @@ export const UserRoleSelect = ({ userId, role }: UserRoleSelectProps) => {
         user: ["set-role"],
       },
     });
-
-    console.log(canChangeRole);
 
     // in theory we'd have a super-admin that can change other admins, but not for this tutorial
     if (canChangeRole.error) {

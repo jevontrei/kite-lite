@@ -8,7 +8,9 @@ import {
 import { ReturnButton } from "@/components/ui/return-button";
 import { UserRoleSelect } from "@/components/user-role-select";
 import { auth } from "@/lib/auth";
-import { UserRole } from "@prisma/client";
+// this needs to be changed to @/generated/prisma/client
+// import { UserRole } from "@prisma/client";
+import { UserRole } from "@/generated/prisma/client";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -29,7 +31,7 @@ export default async function Page() {
   // this is just UX displaying; it's not full protection; you want to always role-check whenever you're doing an actual action, but we'll do that later
   if (session.user.role !== "ADMIN") {
     return (
-      <div className="px-8 py-16 container mx-auto max-w-screen-lg space-y-8">
+      <div className="px-8 py-16 container mx-auto max-w-5xl space-y-8">
         <div className="space-y-8">
           <ReturnButton href="/profile" label="Profile" />
 
@@ -67,9 +69,9 @@ export default async function Page() {
   });
 
   return (
-    <div className="px-8 py-16 container mx-auto max-w-screen-lg space-y-8">
+    <div className="px-8 py-16 container mx-auto max-w-5xl space-y-8">
       <div className="space-y-8">
-        <ReturnButton href="/profile" label="Profile" />
+        <ReturnButton href="/weather" label="Weather" />
 
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 

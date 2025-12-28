@@ -43,8 +43,8 @@ export const SendVerificationEmailForm = () => {
   return (
     <form onSubmit={handleSubmit} className="max-w-sm w-full space-y-4">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" name="email" />
+        <Label htmlFor="verify-email">Email</Label>
+        <Input type="email" id="verify-email" name="email" />
       </div>
       <Button type="submit" disabled={isPending}>
         Resend Verification Email
