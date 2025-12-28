@@ -1,7 +1,27 @@
 
-# JVT
+# Weather you like it or not (WYLION)
 
-note to self:
+JVT - December 2025
+
+A web app for fetching misc weather data and doing misc things with it.
+
+Stack:
+
+- typescript/react: duh
+- framework, routing, built-in backend: next.js
+- weather API: meteomatics/open-meteo
+- ORM: prisma
+- database: postgres (via neon)
+- emails: nodemailer
+- auth: better auth
+- deployment: AWS
+- others:
+  - component libary?: shad-cd
+  - toast: sonner
+  - hash: argon
+  - 
+
+Notes to self:
 
 - db regions may mismatch. if having issues, check that. i chose sydney for neon in the browser, but sydney wasn't available for... prisma? when i was setting up prisma in the terminal
 
@@ -10,7 +30,6 @@ note to self:
 
 somehow installed shadcn
 somehow installed input button label sonner
-
 somehow installed prisma
 somehow installed better-auth
 
@@ -18,8 +37,11 @@ npx prisma db push
 npx prisma generate
 npm i --save-dev @types/pg
 npm i @prisma/adapter-pg
-npm install openmeteo
-
+npm i openmeteo
+npm i @node-rs/argon2
+npm i nodemailer
+npm i --save-dev @types/nodemailer
+npm i @prisma/client
 ```
 
 ---
