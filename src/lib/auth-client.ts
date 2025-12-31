@@ -5,6 +5,8 @@ import {
   magicLinkClient,
 } from "better-auth/client/plugins";
 import type { auth } from "@/lib/auth";
+// understand why we commented this out:
+// import { ac, roles } from "@/lib/permissions";
 
 // re auth import: auth is not a type, but we can use the `type` keyword because we're only using it as a type
 
@@ -19,6 +21,8 @@ const authClient = createAuthClient({
   // Understand this <typeof auth> syntax
   plugins: [
     inferAdditionalFields<typeof auth>(),
+    // understand why we commented this out:
+    // adminClient({ ac, roles }),
     // we use customSessionClient to implement what we did in customSession in auth.ts, but now here on the client; so when we hover user, e.g. in get-started-button.tsx, we get our desired fields/types, instead of just everything from the session
     customSessionClient<typeof auth>(),
     magicLinkClient(),
@@ -31,7 +35,8 @@ export const {
   signOut,
   signIn,
   useSession,
-  admin,
+  // understand why we commented this out:
+  // admin,
   sendVerificationEmail,
   // forgetPassword was renamed to requestPasswordReset;  https://www.answeroverflow.com/m/1381375850582118481
   requestPasswordReset,

@@ -11,6 +11,15 @@ export default async function Weather() {
     headers: headersList,
   });
 
+  // ------------------------------------------------
+  // for debugging
+  console.log("---------------------------------------");
+  const currentDate = new Date();
+  console.log(currentDate.toLocaleTimeString());
+  console.log(">>>page.tsx");
+  console.log("---------------------------------------");
+  // ------------------------------------------------
+
   // if session, the getInvolvedLink takes you to profile, otherwise it takes you to auth page
   let getInvolvedLink;
   let getInvolvedLinkName;

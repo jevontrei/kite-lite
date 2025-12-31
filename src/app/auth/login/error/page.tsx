@@ -8,6 +8,7 @@ interface PageProps {
 // async component
 export default async function Page({ searchParams }: PageProps) {
   const sp = await searchParams;
+  console.log("sp:", sp);
 
   // here we won't bother with the "auth guard" or "session check" that we used in profile/page.tsx; we don't need to protect the auth pages as much as the logged-in profile page
   return (

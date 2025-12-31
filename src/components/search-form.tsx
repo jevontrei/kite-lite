@@ -14,6 +14,15 @@ export default function SearchForm() {
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
 
+  // ------------------------------------------------
+  // for debugging
+  console.log("---------------------------------------");
+  const currentDate = new Date();
+  console.log(currentDate.toLocaleTimeString());
+  console.log(">>>search-form.tsx");
+  console.log("---------------------------------------");
+  // ------------------------------------------------
+
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     // stop the browser's default behaviour, which is to reload(?)
     evt.preventDefault();
@@ -21,16 +30,18 @@ export default function SearchForm() {
     setIsPending(true);
 
     const formData = new FormData(evt.target as HTMLFormElement);
+    console.log("formData", formData);
 
     // figure this out / if it's necessary
-    // const { error } = await searchWeatherAction(formData);
-    // if (error) {
-    //   toast.error(error);
-    //   setIsPending(false);
-    // } else {
-    //   toast.success("success msg here...");
-    //   router.push("/");
-    // }
+    const { error } = await searchWeatherAction(formData);
+    if (error) {
+      toast.error(error);
+      setIsPending(false);
+    } else {
+      toast.success("success msg here...");
+      // TODO: rethink where to push.
+      // router.push("/");
+    }
   }
 
   return (
@@ -49,20 +60,25 @@ export default function SearchForm() {
       </Label>
       <Input type="text" id="longitude" name="longitude" placeholder="13.41" />
 
-      <Label htmlFor="startDate" className="mb-2">
+      <Label htmlFor="start_date" className="mb-2">
         Start date
       </Label>
       <Input
         type="text"
-        id="startDate"
-        name="startDate"
+        id="start_date"
+        name="start_date"
         placeholder="2025-12-12"
       />
 
-      <Label htmlFor="endDate" className="mb-2">
+      <Label htmlFor="end_date" className="mb-2">
         End date
       </Label>
-      <Input type="text" id="endDate" name="endDate" placeholder="2025-12-23" />
+      <Input
+        type="text"
+        id="end_date"
+        name="end_date"
+        placeholder="2025-12-13"
+      />
 
       <Label htmlFor="hourly" className="mb-2">
         Hourly
