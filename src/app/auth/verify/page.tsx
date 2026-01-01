@@ -28,7 +28,7 @@ export default async function Page({ searchParams }: PageProps) {
         {/* this is a double ternary operator, which is a bit ugly, but better than triple ternary, lol */}
         {error === "invalid_token" || error === "token_expired"
           ? "Your token is invalid or expired. Please request a new one."
-          : // here we catch the custom error/message (query param?) we made in sign-in-email.action.ts
+          : // here we catch the custom error/message (query param?) we made in sign-in-email-action.ts
           error === "email_not_verified"
           ? "Please verify your email, or request a new verification below"
           : "Oops! Something went wrong. Please try again."}

@@ -1,7 +1,7 @@
 "use client";
 // "use client" runs this code in the browser
 
-import { signUpEmailAction } from "@/actions/sign-up-email.action";
+import { signUpEmailAction } from "@/actions/sign-up-email-action";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

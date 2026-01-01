@@ -11,7 +11,7 @@ import { getValidDomains, normaliseName } from "@/lib/utils";
 // import { UserRole } from "@prisma/client";
 import { UserRole } from "@/generated/prisma/client";
 import { ac, roles } from "@/lib/permissions";
-import { sendEmailAction } from "@/actions/send-email.action";
+import { sendEmailAction } from "@/actions/send-email-action";
 
 // this file is our main better auth configuration object
 
@@ -175,7 +175,7 @@ const options = {
     },
   },
 
-  // this is the one-liner that replaces the manual cookie setting in sign-in-email.action.ts
+  // this is the one-liner that replaces the manual cookie setting in sign-in-email-action.ts
   plugins: [
     nextCookies(),
     // it's called the "admin" plugin but it's more like an authorisation plugin -- what are you ALLOWED to do?

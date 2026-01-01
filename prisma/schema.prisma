@@ -1,4 +1,4 @@
-// output is required in prisma 7: https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions/upgrading-to-prisma-7#driver-adapters-and-client-instantiation
+// the output field is required in prisma 7: https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions/upgrading-to-prisma-7#driver-adapters-and-client-instantiation
 generator client {
   provider = "prisma-client"
   // can't use @/ here; must use ../src/
@@ -19,9 +19,21 @@ model Weather {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // locationName
-  // lat
-  // long
+  // location
+  // locationName?
+  latitude  Float
+  longitude Float
+  elevation Float?
+
+  // time (time of observation, not createdAt time)
+  timestamp DateTime
+
+  // weather data
+  temperature_2m     Float?
+  wind_speed_10m     Float?
+  wind_direction_10m Float?
+
+  // optionally link to user who did the fetching
   // user   User?   @relation(fields: [userId], references: [id])
   // userId String?
 
@@ -47,7 +59,7 @@ model User {
 
   sessions Session[]
   accounts Account[]
-  posts    Weather[]
+  weather  Weather[]
 
   @@map("users")
 }

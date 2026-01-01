@@ -1,7 +1,8 @@
 "use server";
 
 import { fetchWeatherApi } from "openmeteo";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
+import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
@@ -88,9 +89,34 @@ export async function searchWeatherAction(formData: FormData) {
     // The 'weatherData' object now contains a simple structure, with arrays of datetimes and weather information
     console.log("\nHourly data:\n", weatherData.hourly);
 
-    return { error: null };
+    // save each hour to db
+    for (let i = 0; i < weatherData.hourly.time.length; i++) {
+      // `?.` is optional chaining... safely access the array even if temperature_2m is null
+      const temp = weatherData.hourly.temperature_2m?.[i];
+
+      // skip if temp is null
+      if (temp === null) continue;
+
+      await prisma.weather.create({
+        data: {
+          latitude: latitude,
+          longitude: longitude,
+          elevation: elevation,
+          timestamp: weatherData.hourly.time[i],
+          temperature_2m: temp,
+        },
+      });
+    }
+    console.log(
+      `\nSaved ${weatherData.hourly.time.length} weather records to database\n`
+    );
+
+    return {
+      error: null,
+      data: weatherData.hourly,
+    };
   } catch (err) {
     console.log("err:", err);
-    return { error: err };
+    return { error: String(err), data: null };
   }
 }

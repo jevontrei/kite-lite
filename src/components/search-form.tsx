@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { searchWeatherAction } from "@/actions/search-weather-action";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,7 +11,7 @@ import { toast } from "sonner";
 export default function SearchForm() {
   // isPending is useful because of disabled={isPending}
   const [isPending, setIsPending] = useState(false);
-  const router = useRouter();
+  const [weatherResults, setWeatherResults] = useState(null);
 
   // ------------------------------------------------
   // for debugging
@@ -32,67 +31,102 @@ export default function SearchForm() {
     const formData = new FormData(evt.target as HTMLFormElement);
     console.log("formData", formData);
 
-    // figure this out / if it's necessary
-    const { error } = await searchWeatherAction(formData);
+    // this comment tells typescript to ignore the issue below
+    // @ts-ignore
+    const { error, data } = (await searchWeatherAction(formData)) as any;
     if (error) {
       toast.error(error);
       setIsPending(false);
-    } else {
+    } else if (!error && data) {
       toast.success("success msg here...");
-      // TODO: rethink where to push.
-      // router.push("/");
+      // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using the state-setter will trigger a nice lil re-render!
+      setWeatherResults(data);
     }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-sm w-full space-y-4 border-8 border-transparent"
-    >
-      {/* htmlFor should match the id of the <Input/> */}
-      <Label htmlFor="latitude" className="mb-2">
-        Latitude
-      </Label>
-      <Input type="text" id="latitude" name="latitude" placeholder="52.52" />
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-sm w-full space-y-4 border-8 border-transparent"
+      >
+        {/* htmlFor should match the id of the <Input/> */}
+        <Label htmlFor="latitude" className="mb-2">
+          Latitude
+        </Label>
+        <Input type="text" id="latitude" name="latitude" placeholder="52.52" />
 
-      <Label htmlFor="longitude" className="mb-2">
-        Longitude
-      </Label>
-      <Input type="text" id="longitude" name="longitude" placeholder="13.41" />
+        <Label htmlFor="longitude" className="mb-2">
+          Longitude
+        </Label>
+        <Input
+          type="text"
+          id="longitude"
+          name="longitude"
+          placeholder="13.41"
+        />
 
-      <Label htmlFor="start_date" className="mb-2">
-        Start date
-      </Label>
-      <Input
-        type="text"
-        id="start_date"
-        name="start_date"
-        placeholder="2025-12-12"
-      />
+        <Label htmlFor="start_date" className="mb-2">
+          Start date
+        </Label>
+        <Input
+          type="text"
+          id="start_date"
+          name="start_date"
+          placeholder="2025-12-12"
+        />
 
-      <Label htmlFor="end_date" className="mb-2">
-        End date
-      </Label>
-      <Input
-        type="text"
-        id="end_date"
-        name="end_date"
-        placeholder="2025-12-13"
-      />
+        <Label htmlFor="end_date" className="mb-2">
+          End date
+        </Label>
+        <Input
+          type="text"
+          id="end_date"
+          name="end_date"
+          placeholder="2025-12-13"
+        />
 
-      <Label htmlFor="hourly" className="mb-2">
-        Hourly
-      </Label>
-      <Input
-        type="text"
-        id="hourly"
-        name="hourly"
-        placeholder="temperature_2m"
-      />
+        <Label htmlFor="hourly" className="mb-2">
+          Hourly
+        </Label>
+        <Input
+          type="text"
+          id="hourly"
+          name="hourly"
+          placeholder="temperature_2m"
+        />
 
-      <Button type="submit" className="w-full" disabled={isPending}>
-        Do it
-      </Button>
-    </form>
+        <i>
+          Just hit <b>Do It</b> to run a default API call
+        </i>
+        <Button type="submit" className="w-full" disabled={isPending}>
+          Do it
+        </Button>
+      </form>
+
+      {weatherResults && (
+        <div className="mt-8 max-h-96 overflow-y-auto border rounded">
+          <table className="w-full">
+            <thead className="sticky top-0 bg-gray-100">
+              <tr>
+                <th className="p-2 text-left">Time</th>
+                <th className="p-2 text-left">Temperature (°C)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* there are SEEMING errors here because ts doesn't know the structure of weatherResults */}
+              {weatherResults.time.map((time: string, i: number) => (
+                <tr key={i} className="border-t">
+                  <td className="p-2">{new Date(time).toLocaleString()}</td>
+                  <td className="p-2">
+                    {weatherResults.temperature_2m[i]?.toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 }

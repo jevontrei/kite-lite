@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signInEmailAction } from "@/actions/sign-in-email.action";
+import { signInEmailAction } from "@/actions/sign-in-email-action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
