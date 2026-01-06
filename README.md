@@ -9,17 +9,22 @@ Stack:
 
 - typescript/react: duh
 - framework, routing, built-in backend: next.js
-- weather API: meteomatics/open-meteo
+- weather API: open-meteo
 - ORM: prisma
 - database: postgres (via neon)
 - emails: nodemailer
 - auth: better auth
 - deployment: AWS
 - others:
-  - component libary?: shad-cd
+  - component libary: shad-cd
+  - icons: lucide react
   - toast: sonner
   - hash: argon
   - 
+
+Figma:
+
+https://www.figma.com/board/CqYAM5wWt5XM3BmqJBZg25/kite-lite?node-id=0-1&p=f&t=yAcRY6sAKTvsGFw4-0
 
 TODO:
 

@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { searchWeatherAction } from "@/actions/search-weather-action";
+// import { searchWeatherAction } from "@/actions/search-weather-action";
+import { searchWeatherForecastAction } from "@/actions/search-weather-forecast-action";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -28,82 +29,36 @@ export default function SearchForm() {
 
     setIsPending(true);
 
-    const formData = new FormData(evt.target as HTMLFormElement);
-    console.log("formData", formData);
+    try {
+      const formData = new FormData(evt.target as HTMLFormElement);
+      console.log("formData", formData);
 
-    // this comment tells typescript to ignore the issue below
-    // @ts-ignore
-    const { error, data } = (await searchWeatherAction(formData)) as any;
-    if (error) {
-      toast.error(error);
-      setIsPending(false);
-    } else if (!error && data) {
+      // this comment tells typescript to ignore the issue below
+      // @ts-ignore
+      const { error, data } = (await searchWeatherForecastAction(
+        formData
+      )) as any;
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      // Only runs if no error
       toast.success("success msg here...");
-      // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using the state-setter will trigger a nice lil re-render!
+      // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using this state-setter will trigger a nice lil re-render!
       setWeatherResults(data);
+      console.log("weatherResults:", weatherResults);
+    } catch (err) {
+      toast.error(`Network error: ${err}`);
+    } finally {
+      // always re-enable button
+      setIsPending(false);
     }
   }
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-sm w-full space-y-4 border-8 border-transparent"
-      >
-        {/* htmlFor should match the id of the <Input/> */}
-        <Label htmlFor="latitude" className="mb-2">
-          Latitude
-        </Label>
-        <Input type="text" id="latitude" name="latitude" placeholder="52.52" />
-
-        <Label htmlFor="longitude" className="mb-2">
-          Longitude
-        </Label>
-        <Input
-          type="text"
-          id="longitude"
-          name="longitude"
-          placeholder="13.41"
-        />
-
-        <Label htmlFor="start_date" className="mb-2">
-          Start date
-        </Label>
-        <Input
-          type="text"
-          id="start_date"
-          name="start_date"
-          placeholder="2025-12-12"
-        />
-
-        <Label htmlFor="end_date" className="mb-2">
-          End date
-        </Label>
-        <Input
-          type="text"
-          id="end_date"
-          name="end_date"
-          placeholder="2025-12-13"
-        />
-
-        <Label htmlFor="hourly" className="mb-2">
-          Hourly
-        </Label>
-        <Input
-          type="text"
-          id="hourly"
-          name="hourly"
-          placeholder="temperature_2m"
-        />
-
-        <i>
-          Just hit <b>Do It</b> to run a default API call
-        </i>
-        <Button type="submit" className="w-full" disabled={isPending}>
-          Do it
-        </Button>
-      </form>
-
       {weatherResults && (
         <div className="mt-8 max-h-96 overflow-y-auto border rounded">
           <table className="w-full">
@@ -127,6 +82,77 @@ export default function SearchForm() {
           </table>
         </div>
       )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-sm w-full space-y-4 border-8 border-transparent"
+      >
+        {/* htmlFor should match the id of the <Input/> */}
+        <Label htmlFor="latitude" className="mb-2">
+          Latitude
+        </Label>
+        <Input type="text" id="latitude" name="latitude" placeholder="52.52" />
+
+        <Label htmlFor="longitude" className="mb-2">
+          Longitude
+        </Label>
+        <Input
+          type="text"
+          id="longitude"
+          name="longitude"
+          placeholder="13.41"
+        />
+
+        {/* start_date and end_date were abandoned when we abandoned historical API for forecast API (bc it was timing out but I think that was just bc i was using vpn) */}
+        {/* <Label htmlFor="start_date" className="mb-2">
+          Start date
+        </Label>
+        <Input
+          type="text"
+          id="start_date"
+          name="start_date"
+          placeholder="2024-12-12"
+        />
+
+        <Label htmlFor="end_date" className="mb-2">
+          End date
+        </Label>
+        <Input
+          type="text"
+          id="end_date"
+          name="end_date"
+          placeholder="2024-12-13"
+        /> */}
+
+        <Label htmlFor="past_days" className="mb-2">
+          Past days
+        </Label>
+        <Input
+          type="number"
+          step="1"
+          min="1"
+          id="past_days"
+          name="past_days"
+          placeholder="2"
+        />
+
+        <Label htmlFor="hourly" className="mb-2">
+          Hourly
+        </Label>
+        <Input
+          type="text"
+          id="hourly"
+          name="hourly"
+          placeholder="temperature_2m"
+        />
+
+        <i>
+          Just hit <b>Do It</b> to run a default API call
+        </i>
+        <Button type="submit" className="w-full" disabled={isPending}>
+          Do it
+        </Button>
+      </form>
     </>
   );
 }

@@ -6,40 +6,30 @@ import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
-export async function searchWeatherAction(formData: FormData) {
+export async function searchWeatherForecastAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
   console.log("---------------------------------------");
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
-  console.log(">>>search-weather-action.ts");
+  console.log(">>>search-weather-forecast-action.ts");
   console.log("---------------------------------------");
   // ------------------------------------------------
   try {
-    // https://open-meteo.com/en/docs/historical-weather-api
+    // https://open-meteo.com/en/docs/ecmwf-api
 
-    // debugging
-    console.log("formData.get('start_date'):", formData.get("start_date"));
-    console.log("formData.get('end_date'):", formData.get("end_date"));
-
-    // i split them up like this (instead of doing it in one step) so i could access start_date and end_date for debugging
-    const latitudeInput = formData.get("latitude") || 52.52;
-    const longitudeInput = formData.get("longitude") || 13.41;
-    const start_dateInput = formData.get("start_date") || "2024-12-12";
-    const end_dateInput = formData.get("end_date") || "2024-12-13";
-    const hourlyInput = formData.get("hourly") || "temperature_2m";
+    // convert to numbers
+    // ?
 
     const params = {
       // do i need to wrap certain params in String()?
       // i added default values with OR operators, but i expect this won't play nicely for long because i'll want my form to DEMAND inputs
-      latitude: latitudeInput,
-      longitude: longitudeInput,
-      // open-meteo docs specify "start_date", not camelCase or anything else (because it is a python-based API?)
-      start_date: start_dateInput,
-      end_date: end_dateInput,
-      hourly: hourlyInput,
+      latitude: formData.get("latitude") || 52.52,
+      longitude: formData.get("longitude") || 13.41,
+      hourly: formData.get("hourly") || "temperature_2m",
+      past_days: formData.get("past_days") || 2, // get last e.g. 2 days
     };
-    const url = "https://archive-api.open-meteo.com/v1/archive";
+    const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, params);
 
     // Process first location. Add a for-loop for multiple locations or weather models
@@ -53,8 +43,8 @@ export async function searchWeatherAction(formData: FormData) {
 
     console.log(
       `\nCoordinates: ${latitude}°N ${longitude}°E`,
-      `\nDate range: ${start_dateInput} - ${end_dateInput}`,
-      `\nHourly: ${hourlyInput}`,
+      // `\nDate range: ${start_dateInput} - ${end_dateInput}`,
+      `\nHourly: ${params["hourly"]}`,
       `\nElevation: ${elevation}m asl`,
       `\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`
     );
