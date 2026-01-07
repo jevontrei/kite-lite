@@ -3,13 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-// import { searchWeatherAction } from "@/actions/search-weather-action";
-import { searchWeatherForecastAction } from "@/actions/search-weather-forecast-action";
+import { searchForecastAction } from "@/actions/search-weather-forecast-action";
 import { useState } from "react";
 import { toast } from "sonner";
 
 // rfc
-export default function SearchForm() {
+export default function SearchForecastForm() {
   // isPending is useful because of disabled={isPending}
   const [isPending, setIsPending] = useState(false);
   const [weatherResults, setWeatherResults] = useState(null);
@@ -18,7 +17,7 @@ export default function SearchForm() {
   // for debugging
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
-  console.log(">>>search-form.tsx");
+  console.log(">>>search-forecast-form.tsx");
   // ------------------------------------------------
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
@@ -34,18 +33,9 @@ export default function SearchForm() {
 
       // this comment tells typescript to ignore the issue below
       // @ts-ignore
-      const { error, data } = (await searchWeatherForecastAction(
-        formData
-      )) as any;
+      const { error, data } = (await searchForecastAction(formData)) as any;
 
-      console.log("after action; error:", error);
-      console.log("after action; data:", data);
-
-      // why isn't the toast showing?
-      // maybe `if (error)` is not doing what i think; check this; error should be null if request is successful
       if (error) {
-        console.log("about to toast an error:", error);
-        // do i need to RETURN the toast?
         toast.error(error);
         return;
       }
@@ -109,8 +99,28 @@ export default function SearchForm() {
           placeholder="13.41"
         />
 
+        <Label htmlFor="start_date" className="mb-2">
+          Start date
+        </Label>
+        <Input
+          type="text"
+          id="start_date"
+          name="start_date"
+          placeholder="2024-12-12"
+        />
+
+        <Label htmlFor="end_date" className="mb-2">
+          End date
+        </Label>
+        <Input
+          type="text"
+          id="end_date"
+          name="end_date"
+          placeholder="2024-12-13"
+        />
+
         <Label htmlFor="past_days" className="mb-2">
-          Past days
+          Past days (optional)
         </Label>
         <Input
           type="number"
@@ -118,7 +128,7 @@ export default function SearchForm() {
           min="1"
           id="past_days"
           name="past_days"
-          placeholder="2"
+          placeholder="0"
         />
 
         <Label htmlFor="hourly" className="mb-2">

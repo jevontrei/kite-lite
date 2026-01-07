@@ -40,7 +40,7 @@ export async function proxy(req: NextRequest) {
   }
   // if you ARE logged in, you shouldn't still be on auth route; go to profile (or weather?) page
   if (isOnAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/weather", req.url));
+    return NextResponse.redirect(new URL("/weather-forecast", req.url));
   }
   // otherwise, let the request proceed; for public routes etc
   return res;

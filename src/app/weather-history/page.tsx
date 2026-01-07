@@ -1,8 +1,7 @@
-import SearchForm from "@/components/search-form";
+import SearchHistoryForm from "@/components/search-history-form";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { NavBar } from "@/components/ui/nav-bar";
 
 export default async function Weather() {
   // get session
@@ -33,9 +32,9 @@ export default async function Weather() {
   return (
     <div className="flex items-center justify-center h-dvh">
       <div className="flex justify-center gap-8 flex-col items-center">
-        <NavBar />
         <h1 className="text-5xl font-bold">Weather you like it or not</h1>
-        <SearchForm />
+        <h2 className="text-2xl font-bold">Historical data</h2>
+        <SearchHistoryForm />
         <Link
           href={getInvolvedLink}
           className="text-sm italic text-muted-foreground hover:text-foreground"

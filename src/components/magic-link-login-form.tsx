@@ -24,7 +24,7 @@ export const MagicLinkLoginForm = () => {
     await signIn.magicLink({
       email,
       name: email.split("@")[0],
-      callbackURL: "/weather",
+      callbackURL: "/weather-forecast",
       fetchOptions: {
         onRequest: () => {
           setIsPending(true);

@@ -11,12 +11,12 @@ const destinations = [
     label: "Profile",
   },
   {
-    href: "/weather-history",
-    label: "Weather History",
-  },
-  {
     href: "/weather-forecast",
     label: "Weather Forecast",
+  },
+  {
+    href: "/weather-history",
+    label: "Weather History",
   },
 ];
 

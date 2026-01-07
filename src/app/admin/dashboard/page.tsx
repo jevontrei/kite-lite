@@ -71,7 +71,7 @@ export default async function Page() {
   return (
     <div className="px-8 py-16 container mx-auto max-w-5xl space-y-8">
       <div className="space-y-8">
-        <ReturnButton href="/weather" label="Weather" />
+        <ReturnButton href="/weather-forecast" label="Weather" />
 
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 

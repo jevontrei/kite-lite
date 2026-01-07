@@ -6,12 +6,12 @@ import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
-export async function searchWeatherAction(formData: FormData) {
+export async function searchHistoryAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
-  console.log(">>>search-weather-action.ts");
+  console.log(">>>search-weather-history-action.ts");
   // ------------------------------------------------
   try {
     // https://open-meteo.com/en/docs/historical-weather-api

@@ -30,7 +30,7 @@ export default function Page() {
 
         <p>
           <Link
-            href="/weather"
+            href="/weather-forecast"
             className="text-muted-foreground text-sm hover:text-foreground"
           >
             Continue as a guest

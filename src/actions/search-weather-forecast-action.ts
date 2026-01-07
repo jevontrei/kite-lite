@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
-export async function searchWeatherForecastAction(formData: FormData) {
+export async function searchForecastAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
@@ -19,13 +19,17 @@ export async function searchWeatherForecastAction(formData: FormData) {
     // Extract inputs
     const latitude_input = formData.get("latitude") || 52.52;
     const longitude_input = formData.get("longitude") || 13.41;
-    const past_days_input = formData.get("past_days") || 2; // get last e.g. 2 days
+    // why does the default 2-past-days request return more than 2 days? -> because this API defaults to sending 10 days of data? and so is past_days added on top of that? idk
+    const past_days_input = formData.get("past_days") || 0; // get last e.g. 2 days (? hmmm confim functionality)
     const hourly_input = formData.get("hourly") || "temperature_2m";
+
+    console.log("past_days_input:", past_days_input);
 
     // convert to numbers
     const latitude = Number(latitude_input);
     const longitude = Number(longitude_input);
     const past_days = Number(past_days_input);
+    console.log("past_days:", past_days);
 
     // validate
     if (isNaN(latitude) || latitude < -90 || latitude > 90) {
@@ -45,10 +49,10 @@ export async function searchWeatherForecastAction(formData: FormData) {
     }
 
     // open-meteo API max past_days is 92
-    if (isNaN(past_days) || past_days < 1 || past_days > 92) {
+    if (isNaN(past_days) || past_days < 0 || past_days > 92) {
       console.log(">>>past_days error");
       return {
-        error: "Invalid past_days; must be between 1 and 92",
+        error: "Invalid past_days; must be between 0 and 92",
         data: null,
       };
     }

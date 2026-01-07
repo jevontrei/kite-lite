@@ -30,8 +30,8 @@ export const GetStartedButton = () => {
   }
 
   // session might be null
-  // dynamically render a link based on the session; either link to /weather if you have a session, or login if not
-  const href = session ? "/weather" : "/auth/login";
+  // dynamically render a link based on the session; either link to /weather-forecast if you have a session, or login if not
+  const href = session ? "/weather-forecast" : "/auth/login";
 
   return (
     <div className="flex flex-col items-center gap-4">
