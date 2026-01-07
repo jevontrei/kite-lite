@@ -30,7 +30,7 @@ TODO:
 
 - finish .env
 - allow user to specify ERA5 etc
-- handle an array of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
+- handle an ARRAY of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
 
 Notes to self:
 

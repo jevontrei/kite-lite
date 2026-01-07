@@ -9,25 +9,57 @@ import { prisma } from "@/lib/prisma";
 export async function searchWeatherForecastAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
-  console.log("---------------------------------------");
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>search-weather-forecast-action.ts");
-  console.log("---------------------------------------");
   // ------------------------------------------------
   try {
     // https://open-meteo.com/en/docs/ecmwf-api
 
+    // Extract inputs
+    const latitude_input = formData.get("latitude") || 52.52;
+    const longitude_input = formData.get("longitude") || 13.41;
+    const past_days_input = formData.get("past_days") || 2; // get last e.g. 2 days
+    const hourly_input = formData.get("hourly") || "temperature_2m";
+
     // convert to numbers
-    // ?
+    const latitude = Number(latitude_input);
+    const longitude = Number(longitude_input);
+    const past_days = Number(past_days_input);
+
+    // validate
+    if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+      console.log(">>>lat error");
+      return {
+        error: "Invalid latitude; must be between -90 and 90",
+        data: null,
+      };
+    }
+
+    if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+      console.log(">>>lon error");
+      return {
+        error: "Invalid longitude; must be between -180 amnd 180",
+        data: null,
+      };
+    }
+
+    // open-meteo API max past_days is 92
+    if (isNaN(past_days) || past_days < 1 || past_days > 92) {
+      console.log(">>>past_days error");
+      return {
+        error: "Invalid past_days; must be between 1 and 92",
+        data: null,
+      };
+    }
 
     const params = {
       // do i need to wrap certain params in String()?
       // i added default values with OR operators, but i expect this won't play nicely for long because i'll want my form to DEMAND inputs
-      latitude: formData.get("latitude") || 52.52,
-      longitude: formData.get("longitude") || 13.41,
-      hourly: formData.get("hourly") || "temperature_2m",
-      past_days: formData.get("past_days") || 2, // get last e.g. 2 days
+      latitude: latitude,
+      longitude: longitude,
+      past_days: past_days,
+      hourly: hourly_input,
     };
     const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, params);
@@ -36,17 +68,16 @@ export async function searchWeatherForecastAction(formData: FormData) {
     const response = responses[0];
 
     // Attributes for timezone and location
-    const latitude = response.latitude();
-    const longitude = response.longitude();
-    const elevation = response.elevation();
-    const utcOffsetSeconds = response.utcOffsetSeconds();
+    const apiLatitude = response.latitude();
+    const apiLongitude = response.longitude();
+    const apiElevation = response.elevation();
+    const apiUtcOffsetSeconds = response.utcOffsetSeconds();
 
     console.log(
-      `\nCoordinates: ${latitude}°N ${longitude}°E`,
-      // `\nDate range: ${start_dateInput} - ${end_dateInput}`,
+      `\nCoordinates: ${apiLatitude}°N ${apiLongitude}°E`,
       `\nHourly: ${params["hourly"]}`,
-      `\nElevation: ${elevation}m asl`,
-      `\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`
+      `\nElevation: ${apiElevation}m asl`,
+      `\nTimezone difference to GMT+0: ${apiUtcOffsetSeconds}s`
     );
 
     // this bang is typescript's non-null assertion operator: use this "when you know that a null value cannot occur"
@@ -67,7 +98,7 @@ export async function searchWeatherForecastAction(formData: FormData) {
             new Date(
               (Number(hourly.time()) +
                 i * hourly.interval() +
-                utcOffsetSeconds) *
+                apiUtcOffsetSeconds) *
                 1000
             )
         ),
@@ -90,7 +121,7 @@ export async function searchWeatherForecastAction(formData: FormData) {
         return {
           latitude: latitude,
           longitude: longitude,
-          elevation: elevation,
+          elevation: apiElevation,
           timestamp: weatherData.hourly.time[i],
           temperature_2m: temp,
         };

@@ -16,11 +16,9 @@ export default function SearchForm() {
 
   // ------------------------------------------------
   // for debugging
-  console.log("---------------------------------------");
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>search-form.tsx");
-  console.log("---------------------------------------");
   // ------------------------------------------------
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
@@ -30,6 +28,7 @@ export default function SearchForm() {
     setIsPending(true);
 
     try {
+      toast.info("testing");
       const formData = new FormData(evt.target as HTMLFormElement);
       console.log("formData", formData);
 
@@ -39,7 +38,14 @@ export default function SearchForm() {
         formData
       )) as any;
 
+      console.log("after action; error:", error);
+      console.log("after action; data:", data);
+
+      // why isn't the toast showing?
+      // maybe `if (error)` is not doing what i think; check this; error should be null if request is successful
       if (error) {
+        console.log("about to toast an error:", error);
+        // do i need to RETURN the toast?
         toast.error(error);
         return;
       }
@@ -52,7 +58,7 @@ export default function SearchForm() {
     } catch (err) {
       toast.error(`Network error: ${err}`);
     } finally {
-      // always re-enable button
+      // ALWAYS re-enable button
       setIsPending(false);
     }
   }
@@ -102,27 +108,6 @@ export default function SearchForm() {
           name="longitude"
           placeholder="13.41"
         />
-
-        {/* start_date and end_date were abandoned when we abandoned historical API for forecast API (bc it was timing out but I think that was just bc i was using vpn) */}
-        {/* <Label htmlFor="start_date" className="mb-2">
-          Start date
-        </Label>
-        <Input
-          type="text"
-          id="start_date"
-          name="start_date"
-          placeholder="2024-12-12"
-        />
-
-        <Label htmlFor="end_date" className="mb-2">
-          End date
-        </Label>
-        <Input
-          type="text"
-          id="end_date"
-          name="end_date"
-          placeholder="2024-12-13"
-        /> */}
 
         <Label htmlFor="past_days" className="mb-2">
           Past days

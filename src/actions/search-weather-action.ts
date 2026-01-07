@@ -9,11 +9,9 @@ import { prisma } from "@/lib/prisma";
 export async function searchWeatherAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
-  console.log("---------------------------------------");
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>search-weather-action.ts");
-  console.log("---------------------------------------");
   // ------------------------------------------------
   try {
     // https://open-meteo.com/en/docs/historical-weather-api
@@ -23,21 +21,21 @@ export async function searchWeatherAction(formData: FormData) {
     console.log("formData.get('end_date'):", formData.get("end_date"));
 
     // i split them up like this (instead of doing it in one step) so i could access start_date and end_date for debugging
-    const latitudeInput = formData.get("latitude") || 52.52;
-    const longitudeInput = formData.get("longitude") || 13.41;
+    const latitude_input = formData.get("latitude") || 52.52;
+    const longitude_input = formData.get("longitude") || 13.41;
     const start_dateInput = formData.get("start_date") || "2024-12-12";
     const end_dateInput = formData.get("end_date") || "2024-12-13";
-    const hourlyInput = formData.get("hourly") || "temperature_2m";
+    const hourly_input = formData.get("hourly") || "temperature_2m";
 
     const params = {
       // do i need to wrap certain params in String()?
       // i added default values with OR operators, but i expect this won't play nicely for long because i'll want my form to DEMAND inputs
-      latitude: latitudeInput,
-      longitude: longitudeInput,
+      latitude: latitude_input,
+      longitude: longitude_input,
       // open-meteo docs specify "start_date", not camelCase or anything else (because it is a python-based API?)
       start_date: start_dateInput,
       end_date: end_dateInput,
-      hourly: hourlyInput,
+      hourly: hourly_input,
     };
     const url = "https://archive-api.open-meteo.com/v1/archive";
     const responses = await fetchWeatherApi(url, params);
@@ -54,7 +52,7 @@ export async function searchWeatherAction(formData: FormData) {
     console.log(
       `\nCoordinates: ${latitude}°N ${longitude}°E`,
       `\nDate range: ${start_dateInput} - ${end_dateInput}`,
-      `\nHourly: ${hourlyInput}`,
+      `\nHourly: ${hourly_input}`,
       `\nElevation: ${elevation}m asl`,
       `\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`
     );
