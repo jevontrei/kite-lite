@@ -120,9 +120,7 @@ export async function searchHistoryAction(formData: FormData) {
       data: weatherData.hourly,
     };
   } catch (err) {
-    console.log("err:", err);
-    console.log("err.name:", err.name);
-    console.log("err.message:", err.message);
+    console.log("Error in weather history search:", err);
     return { error: String(err), data: null };
   }
 }
