@@ -6,82 +6,55 @@ import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
-export async function searchForecastAction(formData: FormData) {
+export async function searchHistoryAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
   console.log(currentDate.toLocaleTimeString());
-  console.log(">>>search-weather-forecast-action.ts");
+  console.log(">>>search-history-action.ts");
   // ------------------------------------------------
   try {
-    // https://open-meteo.com/en/docs/ecmwf-api
+    // https://open-meteo.com/en/docs/historical-weather-api
 
-    // Extract inputs
+    // debugging
+    console.log("formData.get('start_date'):", formData.get("start_date"));
+    console.log("formData.get('end_date'):", formData.get("end_date"));
+
+    // i split them up like this (instead of doing it in one step) so i could access start_date and end_date for debugging
     const latitude_input = formData.get("latitude") || 52.52;
     const longitude_input = formData.get("longitude") || 13.41;
-    // why does the default 2-past-days request return more than 2 days? -> because this API defaults to sending 10 days of data? and so is past_days added on top of that? idk
-    const past_days_input = formData.get("past_days") || 0; // get last e.g. 2 days (? hmmm confim functionality)
+    const start_dateInput = formData.get("start_date") || "2024-12-12";
+    const end_dateInput = formData.get("end_date") || "2024-12-13";
     const hourly_input = formData.get("hourly") || "temperature_2m";
-
-    console.log("past_days_input:", past_days_input);
-
-    // convert to numbers
-    const latitude = Number(latitude_input);
-    const longitude = Number(longitude_input);
-    const past_days = Number(past_days_input);
-    console.log("past_days:", past_days);
-
-    // validate
-    if (isNaN(latitude) || latitude < -90 || latitude > 90) {
-      console.log(">>>lat error");
-      return {
-        error: "Invalid latitude; must be between -90 and 90",
-        data: null,
-      };
-    }
-
-    if (isNaN(longitude) || longitude < -180 || longitude > 180) {
-      console.log(">>>lon error");
-      return {
-        error: "Invalid longitude; must be between -180 amnd 180",
-        data: null,
-      };
-    }
-
-    // open-meteo API max past_days is 92
-    if (isNaN(past_days) || past_days < 0 || past_days > 92) {
-      console.log(">>>past_days error");
-      return {
-        error: "Invalid past_days; must be between 0 and 92",
-        data: null,
-      };
-    }
 
     const params = {
       // do i need to wrap certain params in String()?
       // i added default values with OR operators, but i expect this won't play nicely for long because i'll want my form to DEMAND inputs
-      latitude: latitude,
-      longitude: longitude,
-      past_days: past_days,
+      latitude: latitude_input,
+      longitude: longitude_input,
+      // open-meteo docs specify "start_date", not camelCase or anything else (because it is a python-based API?)
+      start_date: start_dateInput,
+      end_date: end_dateInput,
       hourly: hourly_input,
     };
-    const url = "https://api.open-meteo.com/v1/forecast";
+    const url = "https://archive-api.open-meteo.com/v1/archive";
     const responses = await fetchWeatherApi(url, params);
 
     // Process first location. Add a for-loop for multiple locations or weather models
     const response = responses[0];
 
     // Attributes for timezone and location
-    const apiLatitude = response.latitude();
-    const apiLongitude = response.longitude();
-    const apiElevation = response.elevation();
-    const apiUtcOffsetSeconds = response.utcOffsetSeconds();
+    const latitude = response.latitude();
+    const longitude = response.longitude();
+    const elevation = response.elevation();
+    const utcOffsetSeconds = response.utcOffsetSeconds();
 
     console.log(
-      `\nCoordinates: ${apiLatitude}°N ${apiLongitude}°E`,
-      `\nHourly: ${params["hourly"]}`,
-      `\nElevation: ${apiElevation}m asl`,
-      `\nTimezone difference to GMT+0: ${apiUtcOffsetSeconds}s`
+      `\nCoordinates: ${latitude}°N ${longitude}°E`,
+      `\nDate range: ${start_dateInput} - ${end_dateInput}`,
+      `\nHourly: ${hourly_input}`,
+      `\nElevation: ${elevation}m asl`,
+      `\nTimezone difference to GMT+0: ${utcOffsetSeconds}s`
     );
 
     // this bang is typescript's non-null assertion operator: use this "when you know that a null value cannot occur"
@@ -102,7 +75,7 @@ export async function searchForecastAction(formData: FormData) {
             new Date(
               (Number(hourly.time()) +
                 i * hourly.interval() +
-                apiUtcOffsetSeconds) *
+                utcOffsetSeconds) *
                 1000
             )
         ),
@@ -125,7 +98,7 @@ export async function searchForecastAction(formData: FormData) {
         return {
           latitude: latitude,
           longitude: longitude,
-          elevation: apiElevation,
+          elevation: elevation,
           timestamp: weatherData.hourly.time[i],
           temperature_2m: temp,
         };

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { searchHistoryAction } from "@/actions/search-weather-history-action";
+import { searchHistoryAction } from "@/actions/search-history-action";
 import { useState } from "react";
 import { toast } from "sonner";
 
