@@ -14,7 +14,7 @@ Stack:
 - database: postgres (via neon)
 - emails: nodemailer
 - auth: better auth
-- deployment: AWS
+- deployment: Vercel, then switch to AWS later
 - others:
   - component libary: shad-cd
   - icons: lucide react
