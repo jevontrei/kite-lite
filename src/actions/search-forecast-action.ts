@@ -10,6 +10,7 @@ export async function searchForecastAction(formData: FormData) {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
+  console.log();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>search-forecast-action.ts");
   // ------------------------------------------------

@@ -11,6 +11,7 @@ Stack:
 
 - typescript/react: duh
 - framework, routing, built-in backend: next.js
+  - app router?
 - weather API: open-meteo
 - ORM: prisma
 - database: postgres (via neon)
@@ -28,15 +29,34 @@ Figma:
 
 https://www.figma.com/board/CqYAM5wWt5XM3BmqJBZg25/kite-lite?node-id=0-1&p=f&t=yAcRY6sAKTvsGFw4-0
 
-TODO:
-
-- finish .env
-- allow user to specify ERA5 etc
-- handle an ARRAY of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
-
 Notes to self:
 
 - db regions may mismatch. if having issues, check that. i chose sydney for neon in the browser, but sydney wasn't available for... prisma? when i was setting up prisma in the terminal
+
+TODO:
+
+- apply joel.ipynb principles
+- error handling
+- error types?
+- handle empty API responses?
+- validation
+- logging
+- finish auth stuff
+- prevent duplicates added to db
+- actually query db (we are only saving rn)
+- finish .env (github socials login)
+- add wind data
+  - handle an ARRAY of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
+  - update db schema
+- fix toast msgs
+- clean up console.logs
+- flesh out readme
+
+TODOs for later:
+
+- mobile responsiveness
+- allow user to specify ERA5 etc
+- 
 
 ```sh
 # things i had to do (in probably the wrong order)

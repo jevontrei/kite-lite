@@ -18,6 +18,10 @@ const destinations = [
     href: "/weather-history",
     label: "Weather History",
   },
+  {
+    href: "/my-data",
+    label: "My Data",
+  },
 ];
 
 export const NavBar = () => {

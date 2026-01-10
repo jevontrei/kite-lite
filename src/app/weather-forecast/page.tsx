@@ -14,6 +14,7 @@ export default async function Weather() {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
+  console.log();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>page.tsx");
   // ------------------------------------------------
