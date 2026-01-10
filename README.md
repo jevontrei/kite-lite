@@ -45,6 +45,7 @@ TODO:
 - prevent duplicates added to db
 - actually query db (we are only saving rn)
 - finish .env (github socials login)
+  - including prod env!
 - add wind data
   - handle an ARRAY of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
   - update db schema

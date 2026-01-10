@@ -2,7 +2,6 @@ import SearchHistoryForm from "@/components/search-history-form";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import DataTable from "@/components/data-table";
 
 export default async function Weather() {
   // get session
