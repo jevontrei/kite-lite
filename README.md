@@ -3,6 +3,8 @@
 
 JVT - December 2025
 
+https://kite-lite-yevt.vercel.app/
+
 A web app for fetching misc weather data and doing misc things with it.
 
 Stack:
