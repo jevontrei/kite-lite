@@ -29,7 +29,7 @@ export default function SearchForecastForm() {
     setIsPending(true);
 
     try {
-      toast.info("testing");
+      toast.info("Working...");
       const formData = new FormData(evt.target as HTMLFormElement);
       console.log("formData", formData);
 
@@ -47,7 +47,6 @@ export default function SearchForecastForm() {
       toast.success("Success!");
       // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using this state-setter will trigger a nice lil re-render!
       setWeatherResults(data);
-      console.log("weatherResults:", weatherResults);
     } catch (err) {
       console.log("error caught in search forecast form:", err);
       toast.error(`Network error: ${err}`);
@@ -87,7 +86,7 @@ export default function SearchForecastForm() {
 
   return (
     <>
-      {weatherResults && <DataTable data={weatherResults} />}
+      {weatherResults && <DataTable weatherResults={weatherResults} />}
 
       <form
         onSubmit={handleSubmit}

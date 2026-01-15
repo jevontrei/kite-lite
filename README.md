@@ -41,7 +41,8 @@ TODO:
 - handle empty API responses?
 - validation
 - logging
-- finish auth stuff
+- fix CSS - things are overlapping
+- finish auth stuff?
 - prevent duplicates added to db
 - actually query db (we are only saving rn)
 - finish .env (github socials login)

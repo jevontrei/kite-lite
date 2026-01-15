@@ -148,7 +148,30 @@ export async function searchForecastAction(formData: FormData) {
       data: weatherData.hourly,
     };
   } catch (err) {
+    // log full error details for debugging
     console.log("Error in weather forecast search:", err);
-    return { error: String(err), data: null };
+
+    // handle specific error types
+    if (err instanceof Error) {
+      if (err.message.includes("ETIMEDOUT")) {
+        return {
+          error: "Request timed out",
+          data: null,
+        };
+      }
+
+      if (err.message.includes("ECONNREFUSED")) {
+        return {
+          error: "Could not connect to db",
+          data: null,
+        };
+      }
+
+      // return specific error msg
+      return { error: err.message, data: null };
+    }
+
+    // fallback for unknown errors (without details... see logs for details)
+    return { error: "Unexpected error occurred", data: null };
   }
 }

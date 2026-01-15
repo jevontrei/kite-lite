@@ -30,7 +30,6 @@ export default function MyData() {
       // only runs if no error
       toast.success("Success!");
       setWeatherResults(data);
-      console.log("weatherResults:", weatherResults);
     } catch (err) {
       toast.error(`Network error: ${err}`);
     } finally {

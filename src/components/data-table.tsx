@@ -1,6 +1,6 @@
 "use client";
 
-export default function DataTable(weatherResults) {
+export default function DataTable({ weatherResults }) {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
@@ -8,9 +8,6 @@ export default function DataTable(weatherResults) {
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>data-table.tsx");
   // ------------------------------------------------
-
-  console.log("weatherResults:", weatherResults);
-  console.log("weatherResults.time:", weatherResults.time);
 
   return (
     <>
