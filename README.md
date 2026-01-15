@@ -62,6 +62,8 @@ TODOs for later:
 ```sh
 # things i had to do (in probably the wrong order)
 
+npx create-next-app@latest .
+
 somehow installed shadcn
 somehow installed input button label sonner
 somehow installed prisma
