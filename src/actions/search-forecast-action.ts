@@ -113,7 +113,7 @@ export async function searchForecastAction(formData: FormData) {
     };
 
     // The 'weatherData' object now contains a simple structure, with arrays of datetimes and weather information
-    console.log("\nHourly data:\n", weatherData.hourly);
+    // console.log("\nHourly data:\n", weatherData.hourly);
 
     // save all hours to db at once
     const weatherRecords = weatherData.hourly.time

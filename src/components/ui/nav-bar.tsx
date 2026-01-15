@@ -15,10 +15,6 @@ const destinations = [
     label: "Weather Forecast",
   },
   {
-    href: "/weather-history",
-    label: "Weather History",
-  },
-  {
     href: "/my-data",
     label: "My Data",
   },
