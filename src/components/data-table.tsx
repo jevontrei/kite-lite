@@ -21,14 +21,13 @@ export default function DataTable({ weatherResults }) {
               </tr>
             </thead>
             <tbody>
-              {/* there are SEEMING errors here because ts doesn't know the structure of weatherResults */}
-              {/* @ts-expect-error - weatherResults type not defined */}
-              {weatherResults.time.map((time: string, i: number) => (
+              {weatherResults.map((_: object, i: number) => (
                 <tr key={i} className="border-t">
-                  <td className="p-2">{new Date(time).toLocaleString()}</td>
                   <td className="p-2">
-                    {/* @ts-expect-error - weatherResults type not defined */}
-                    {weatherResults.temperature_2m[i]?.toFixed(1)}
+                    {new Date(weatherResults[i].timestamp).toLocaleString()}
+                  </td>
+                  <td className="p-2">
+                    {weatherResults[i].temperature_2m?.toFixed(1)}
                   </td>
                 </tr>
               ))}

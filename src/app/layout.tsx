@@ -30,8 +30,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NavBar />
-        {children}
-        <Toaster position="top-center" richColors />
+
+        <div className="flex items-center justify-center h-dvh">
+          <div className="flex justify-center gap-4 flex-col items-center">
+            <h1 className="text-5xl font-bold">Weather you like it or not</h1>
+
+            {children}
+            <p className="mt-8">&copy; JVT</p>
+          </div>
+        </div>
+
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

@@ -2,20 +2,22 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function QueryDbAction(formData) {
+export async function QueryDbAction() {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
+  console.log();
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>query-db-action.ts");
   // ------------------------------------------------
+
   try {
     const dbResponse = await prisma.weather.findMany();
     // const weatherData = dbResponse
 
     return {
       error: null,
-      data: dbResponse.hourly, // or weatherResults?
+      data: dbResponse, // or weatherResults?
     };
   } catch (err) {
     console.log("Error in database fetching:", err);
