@@ -151,12 +151,14 @@ export default function SearchForecastForm() {
           placeholder="temperature_2m"
         />
 
-        <i>
-          Just hit <b>Do It</b> to run a default API call
-        </i>
-        <Button type="submit" className="w-full" disabled={isPending}>
-          Do it
-        </Button>
+        <div className="mt-4">
+          <i>
+            Just hit <b>Do It</b> to run a default API call
+          </i>
+          <Button type="submit" className="w-full" disabled={isPending}>
+            Do it
+          </Button>
+        </div>
       </form>
     </>
   );

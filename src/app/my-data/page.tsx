@@ -73,7 +73,7 @@ export default function MyData() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold">My data</h1>
+      <h1 className="text-3xl font-bold mt-4 mb-4">My data</h1>
 
       {weatherResults && (
         <div className="mt-8 max-h-96 overflow-y-auto border rounded">
@@ -112,12 +112,14 @@ export default function MyData() {
         </form>
       </div>
 
-      <Link
-        href={getInvolvedLink}
-        className="text-sm italic text-muted-foreground hover:text-foreground"
-      >
-        {getInvolvedLinkName}
-      </Link>
+      <div className="mt-4">
+        <Link
+          href={getInvolvedLink}
+          className="text-sm italic text-muted-foreground hover:text-foreground"
+        >
+          {getInvolvedLinkName}
+        </Link>
+      </div>
     </>
   );
 }

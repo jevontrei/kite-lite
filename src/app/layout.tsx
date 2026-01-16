@@ -32,11 +32,13 @@ export default function RootLayout({
         <NavBar />
 
         <div className="flex items-center justify-center min-h-dvh">
-          <div className="flex justify-center gap-4 flex-col items-center">
-            <h1 className="text-5xl font-bold">Weather you like it or not</h1>
+          <div className="flex justify-center gap-6 flex-col items-center">
+            <h1 className="text-5xl font-bold mt-4 mb-4">
+              Weather you like it or not
+            </h1>
 
             {children}
-            <p className="mt-8">&copy; JVT</p>
+            <p className="mt-4">&copy; JVT</p>
           </div>
         </div>
 
