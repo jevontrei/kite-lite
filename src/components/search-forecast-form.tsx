@@ -6,7 +6,6 @@ import { Label } from "./ui/label";
 import { searchForecastAction } from "@/actions/search-forecast-action";
 import { useState } from "react";
 import { toast } from "sonner";
-import DataTable from "./data-table";
 
 // rfc
 export default function SearchForecastForm() {
@@ -31,7 +30,7 @@ export default function SearchForecastForm() {
     try {
       toast.info("Working...");
       const formData = new FormData(evt.target as HTMLFormElement);
-      console.log("formData", formData);
+      // console.log("formData", formData);  // this is an "opaque" object... can't see into it this way
 
       // this comment tells typescript to ignore the issue below
       // @ts-ignore
@@ -42,13 +41,17 @@ export default function SearchForecastForm() {
         return;
       }
 
+      // debugging
+      // console.log("data:", data);
+      // this doesn't work bc react only re-renders AFTER all state updates have been batched; it will work outside handleSubmit()
+      // console.log("weatherResults:", weatherResults);
+
       // Only runs if no error
-      console.log("data:", data);
       toast.success("Success!");
       // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using this state-setter will trigger a nice lil re-render!
       setWeatherResults(data);
     } catch (err) {
-      console.log("error caught in search forecast form:", err);
+      console.log("Error caught in search forecast form:", err);
       toast.error(`Network error: ${err}`);
     } finally {
       // ALWAYS re-enable button
@@ -56,9 +59,35 @@ export default function SearchForecastForm() {
     }
   }
 
+  // this works OUTSIDE handleSubmit()
+  // console.log("weatherResults:", weatherResults);
+
   return (
     <>
-      {weatherResults && <DataTable weatherResults={weatherResults} />}
+      {weatherResults && (
+        <div className="mt-8 max-h-96 overflow-y-auto border rounded">
+          <table className="w-full">
+            <thead className="sticky top-0 bg-gray-100">
+              <tr>
+                <th className="p-2 text-left">Time</th>
+                <th className="p-2 text-left">Temperature (°C)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {weatherResults.time.map((_, i: number) => (
+                <tr key={i} className="border-t">
+                  <td className="p-2">
+                    {new Date(weatherResults.time[i]).toLocaleString()}
+                  </td>
+                  <td className="p-2">
+                    {weatherResults.temperature_2m[i]?.toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit}

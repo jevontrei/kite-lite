@@ -1,10 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import DataTable from "@/components/data-table";
 import { QueryDbAction } from "@/actions/query-db-action";
 import { toast } from "sonner";
 import { useState } from "react";
+import Link from "next/link";
+import { useSession } from "@/lib/auth-client";
 
 export default function MyData() {
   const [weatherResults, setWeatherResults] = useState();
@@ -17,6 +18,28 @@ export default function MyData() {
   console.log(currentDate.toLocaleTimeString());
   console.log(">>>my-data/page.tsx");
   // ------------------------------------------------
+
+  // get session
+  // this is a different way to get the session on the client
+  // https://www.better-auth.com/docs/basic-usage#get-session
+  // `data: session` is RENAMING, not casting (?)
+  const { data: session, error: sessionError } = useSession();
+
+  // this handling is prob not my best effort
+  if (sessionError) {
+    return <div>Error loading session</div>;
+  }
+
+  // if session, the getInvolvedLink takes you to profile, otherwise it takes you to auth page
+  let getInvolvedLink;
+  let getInvolvedLinkName;
+  if (session) {
+    getInvolvedLink = "/profile";
+    getInvolvedLinkName = "Go to profile";
+  } else {
+    getInvolvedLink = "/auth/register";
+    getInvolvedLinkName = "Go to signup/login";
+  }
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     // do i need to prevent default here? yes i think so, otherwise weird opaque shit happens
@@ -50,7 +73,32 @@ export default function MyData() {
 
   return (
     <>
-      {weatherResults && <DataTable weatherResults={weatherResults} />}
+      <h1 className="text-3xl font-bold">My data</h1>
+
+      {weatherResults && (
+        <div className="mt-8 max-h-96 overflow-y-auto border rounded">
+          <table className="w-full">
+            <thead className="sticky top-0 bg-gray-100">
+              <tr>
+                <th className="p-2 text-left">Time</th>
+                <th className="p-2 text-left">Temperature (°C)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {weatherResults.map((_: object, i: number) => (
+                <tr key={i} className="border-t">
+                  <td className="p-2">
+                    {new Date(weatherResults[i].timestamp).toLocaleString()}
+                  </td>
+                  <td className="p-2">
+                    {weatherResults[i].temperature_2m?.toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <div>
         <h2>See what&apos;s in the database</h2>
@@ -63,6 +111,13 @@ export default function MyData() {
           </Button>
         </form>
       </div>
+
+      <Link
+        href={getInvolvedLink}
+        className="text-sm italic text-muted-foreground hover:text-foreground"
+      >
+        {getInvolvedLinkName}
+      </Link>
     </>
   );
 }

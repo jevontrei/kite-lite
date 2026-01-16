@@ -8,16 +8,26 @@ import Link from "next/link";
 
 // use rafc shortcut here!
 export const GetStartedButton = () => {
+  // get session
   // this is an example of getting the session on the client component; use the useSession() hook
 
   // call the useSession() hook and destructure
   // RENAME the variable with `data: session` for clarity
   // i think this differs to our server components, where you use getSession() and also have to pass in our headers
-  const { data: session, isPending } = useSession();
+  // this is a hook, therefore is not awaitable
+  const { data: session, isPending, error } = useSession();
   // more verbose equivalent to the above destructuring:
   //   const result = useSession();
   //   const session = result.data;
   //   const isPending = result.isPending;
+
+  if (error) {
+    return (
+      <Button size="lg" variant="destructive">
+        Error loading session
+      </Button>
+    );
+  }
 
   // we get a nice pending state for free in this hook; let's utilise it
   if (isPending) {

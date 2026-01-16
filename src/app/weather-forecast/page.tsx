@@ -32,7 +32,7 @@ export default async function Weather() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold">Forecast data</h2>
+      <h1 className="text-3xl font-bold">Forecast data</h1>
       <SearchForecastForm />
       <Link
         href={getInvolvedLink}

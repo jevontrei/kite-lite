@@ -35,6 +35,7 @@ export const {
   signOut,
   signIn,
   useSession,
+  getSession,
   // understand why we commented this out:
   // admin,
   sendVerificationEmail,
