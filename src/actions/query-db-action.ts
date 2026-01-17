@@ -3,10 +3,17 @@
 import { prisma } from "@/lib/prisma";
 import { Weather } from "@/generated/prisma/client";
 
-type DbQueryType = {
-  error: string | null;
-  data: Weather[] | null;
+type DbQuerySuccessType = {
+  error: null;
+  data: Weather[];
 };
+
+type DbQueryErrorType = {
+  error: string;
+  data: null;
+};
+
+type DbQueryType = DbQuerySuccessType | DbQueryErrorType;
 
 export async function QueryDbAction(): Promise<DbQueryType> {
   // ------------------------------------------------
