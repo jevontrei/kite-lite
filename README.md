@@ -38,6 +38,7 @@ TODO:
 - apply joel.ipynb principles
 - error handling
 - error types?
+- fix the broken account linking, including toasts
 - handle empty API responses?
 - validation
 - logging
