@@ -11,6 +11,7 @@ import { Weather } from "@/generated/prisma/client";
 export default function MyData() {
   const [weatherResults, setWeatherResults] = useState<Weather[] | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [dbIsEmpty, setDbIsEmpty] = useState(false);
 
   // ------------------------------------------------
   // for debugging
@@ -60,6 +61,12 @@ export default function MyData() {
         return;
       }
 
+      console.log("data:", data);
+
+      if (data) {
+        setDbIsEmpty(true);
+      }
+
       // only runs if no error
       toast.success("Hell yeah!");
       setWeatherResults(data);
@@ -74,7 +81,13 @@ export default function MyData() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold mt-4 mb-4">My data</h1>
+      <h1 className="text-3xl font-bold mt-4 mb-4">My bloody data</h1>
+
+      {dbIsEmpty && (
+        <div>
+          Looks like the db is empty! Better go fetch some bloody forecast data!
+        </div>
+      )}
 
       {weatherResults && (
         <div className="mt-8 max-h-96 overflow-y-auto border rounded">
