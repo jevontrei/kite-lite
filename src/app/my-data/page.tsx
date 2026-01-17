@@ -61,10 +61,10 @@ export default function MyData() {
         return;
       }
 
-      console.log("data:", data);
-
       if (!data || data.length === 0) {
         setDbIsEmpty(true);
+        toast.info("Database is empty!");
+        return;
       }
 
       // only runs if no error
