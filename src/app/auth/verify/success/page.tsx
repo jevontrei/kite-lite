@@ -11,7 +11,7 @@ export default function Page() {
       </div>
 
       <p className="text-muted-foreground">
-        Success! You have re-sent a verification link to your email.
+        Hell yeah! You have re-sent a verification link to your email.
       </p>
     </div>
   );

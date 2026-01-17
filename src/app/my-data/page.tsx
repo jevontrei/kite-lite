@@ -61,7 +61,7 @@ export default function MyData() {
       }
 
       // only runs if no error
-      toast.success("Success!");
+      toast.success("Hell yeah!");
       setWeatherResults(data);
     } catch (err) {
       console.log("error from my-data/page.tsx:", err);

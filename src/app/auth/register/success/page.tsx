@@ -11,7 +11,7 @@ export default function Page() {
       </div>
 
       <p className="text-muted-foreground">
-        Success! You have successfully registered. Please check your email for
+        Hell yeah! You have successfully registered. Please check your email for
         the verification link.
       </p>
     </div>

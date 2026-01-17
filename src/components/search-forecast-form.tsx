@@ -48,7 +48,7 @@ export default function SearchForecastForm() {
       // console.log("weatherResults:", weatherResults);
 
       // Only runs if no error
-      toast.success("Success!");
+      toast.success("Hell yeah!");
       // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using this state-setter will trigger a nice lil re-render!
       setWeatherResults(data);
     } catch (err) {
