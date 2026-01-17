@@ -63,7 +63,7 @@ export default function MyData() {
 
       console.log("data:", data);
 
-      if (data) {
+      if (!data || data.length === 0) {
         setDbIsEmpty(true);
       }
 
