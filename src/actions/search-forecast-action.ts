@@ -6,7 +6,29 @@ import { prisma } from "@/lib/prisma";
 
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
-export async function searchForecastAction(formData: FormData) {
+// define types for the return value of this action; to prevent annoying typescript complaints in search-forecast-form.tsx
+type WeatherDataType = {
+  time: Date[];
+  temperature_2m: number[];
+};
+
+// pipe here ("|") is typescript union type? not a normal OR operator
+type ActionResultType = {
+  error: string | null;
+  data: WeatherDataType | null;
+};
+
+type WeatherRecordType = {
+  latitude: number;
+  longitude: number;
+  elevation: number;
+  timestamp: Date;
+  temperature_2m: number;
+};
+
+export async function searchForecastAction(
+  formData: FormData,
+): Promise<ActionResultType> {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();
@@ -44,7 +66,7 @@ export async function searchForecastAction(formData: FormData) {
     if (isNaN(longitude) || longitude < -180 || longitude > 180) {
       console.log(">>>lon error");
       return {
-        error: "Invalid longitude; must be between -180 amnd 180",
+        error: "Invalid longitude; must be between -180 and 180",
         data: null,
       };
     }
@@ -82,7 +104,7 @@ export async function searchForecastAction(formData: FormData) {
       `\nCoordinates: ${apiLatitude}°N ${apiLongitude}°E`,
       `\nHourly: ${params["hourly"]}`,
       `\nElevation: ${apiElevation}m asl`,
-      `\nTimezone difference to GMT+0: ${apiUtcOffsetSeconds}s`
+      `\nTimezone difference to GMT+0: ${apiUtcOffsetSeconds}s`,
     );
 
     // this bang is typescript's non-null assertion operator: use this "when you know that a null value cannot occur"
@@ -90,9 +112,13 @@ export async function searchForecastAction(formData: FormData) {
     const hourly = response.hourly()!;
     //   const hourly = typeof hourly === ... ? response.hourly()! : ... ; // or try doing if hourly contains comma, treat it as an array
 
+    // again here we see the non-null assertion operator
+    // idk what this is doing - something for ts
+    const temps = hourly.variables(0)?.valuesArray();
     // Note: The order of weather variables in the URL query and the indices below need to match!
     const weatherData = {
       hourly: {
+        // convert weird Float32Array type to an array
         time: Array.from(
           {
             length:
@@ -104,19 +130,19 @@ export async function searchForecastAction(formData: FormData) {
               (Number(hourly.time()) +
                 i * hourly.interval() +
                 apiUtcOffsetSeconds) *
-                1000
-            )
+                1000,
+            ),
         ),
-        // again here we see the non-null assertion operator
-        temperature_2m: hourly.variables(0)!.valuesArray(),
+        temperature_2m: temps ? Array.from(temps) : [],
       },
     };
 
     // The 'weatherData' object now contains a simple structure, with arrays of datetimes and weather information
-    // console.log("\nHourly data:\n", weatherData.hourly);
+    // console.log("\nweatherData.hourly:\n", weatherData.hourly);
+    // console.log("\nweatherData.hourly:\n", weatherData.hourly);
 
     // save all hours to db at once
-    const weatherRecords = weatherData.hourly.time
+    const weatherRecords: WeatherRecordType[] = weatherData.hourly.time
       .map((time, i) => {
         // `?.` is optional chaining... safely access the array even if temperature_2m is null
         const temp = weatherData.hourly.temperature_2m?.[i];
@@ -131,8 +157,9 @@ export async function searchForecastAction(formData: FormData) {
           temperature_2m: temp,
         };
       })
-      // remove nulls and use `as any` to say "typescript just trust me bro"
-      .filter(Boolean) as any;
+      // remove nulls (just keep truthy values) (very handy little trick!)
+      // .filter(Boolean);  // instead, could use this "type predicate" below - tells TS to narrow the type (i don't really understand this)
+      .filter((record): record is WeatherRecordType => record !== null);
 
     // then insert all at once
     await prisma.weather.createMany({
@@ -140,7 +167,7 @@ export async function searchForecastAction(formData: FormData) {
     });
 
     console.log(
-      `\nSaved ${weatherRecords.length} weather records to database\n`
+      `\nSaved ${weatherRecords.length} weather records to database\n`,
     );
 
     return {

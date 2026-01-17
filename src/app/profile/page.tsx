@@ -35,7 +35,7 @@ export default async function Page() {
   });
 
   return (
-    <div className="px-8 py-16 container mx-auto max-w-5xl space-y-8">
+    <div className="px-8 py-8 container mx-auto max-w-5xl space-y-8">
       <div className="space-y-8">
         <ReturnButton href="/" label="Home" />
 
@@ -45,7 +45,7 @@ export default async function Page() {
       <div className="flex items-center gap-2">
         {session.user.role === "ADMIN" && (
           <Button size="sm" asChild>
-            <Link href="/admin/dashboard">Admin Dashboard</Link>
+            <Link href="/admin/dashboard">Admin Dashboard (TODO)</Link>
           </Button>
         )}
         <SignOutButton />

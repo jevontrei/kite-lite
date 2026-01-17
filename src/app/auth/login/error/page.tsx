@@ -21,8 +21,10 @@ export default async function Page({ searchParams }: PageProps) {
 
       <p className="text-destructive">
         {/* we know about this error because when we tried to log in via google after registering via github, we got redirected to: http://localhost:3000/auth/login/error?error=account_not_linked, and that's because we turned off accountLinking in auth.ts */}
-        {sp.error === "account-not-linked"
-          ? "This account is already linked to another sign-in method."
+        {/* properly understand how this linking stuff works */}
+        {sp.error === "account_not_linked"
+          ? // this msg is not showing properly, even though the error does appear to be "account_not_linked"
+            "This account is already linked to another sign-in method."
           : "Oops! Something went wrong. Please try again."}
       </p>
     </div>

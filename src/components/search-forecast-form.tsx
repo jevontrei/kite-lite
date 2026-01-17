@@ -32,9 +32,7 @@ export default function SearchForecastForm() {
       const formData = new FormData(evt.target as HTMLFormElement);
       // console.log("formData", formData);  // this is an "opaque" object... can't see into it this way
 
-      // this comment tells typescript to ignore the issue below
-      // @ts-ignore
-      const { error, data } = (await searchForecastAction(formData)) as any;
+      const { error, data } = await searchForecastAction(formData);
 
       if (error) {
         toast.error(error);
@@ -51,6 +49,7 @@ export default function SearchForecastForm() {
       // no longer using router.push("/"); we are displaying the searched data on the page below the form... and using this state-setter will trigger a nice lil re-render!
       setWeatherResults(data);
     } catch (err) {
+      // this is just for network errors; the `error` above is from searchForecastAction, but it doesn't actually throw
       console.log("Error caught in search forecast form:", err);
       toast.error(`Network error: ${err}`);
     } finally {
@@ -142,13 +141,14 @@ export default function SearchForecastForm() {
         />
 
         <Label htmlFor="hourly" className="mb-2">
-          Hourly
+          Hourly (not yet implemented)
         </Label>
         <Input
           type="text"
           id="hourly"
           name="hourly"
           placeholder="temperature_2m"
+          disabled
         />
 
         <div className="mt-4">

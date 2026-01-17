@@ -6,9 +6,10 @@ import { toast } from "sonner";
 import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "@/lib/auth-client";
+import { Weather } from "@/generated/prisma/client";
 
 export default function MyData() {
-  const [weatherResults, setWeatherResults] = useState();
+  const [weatherResults, setWeatherResults] = useState<Weather[] | null>(null);
   const [isPending, setIsPending] = useState(false);
 
   // ------------------------------------------------
@@ -48,10 +49,10 @@ export default function MyData() {
     setIsPending(true);
 
     try {
-      toast.info("Attempting db query");
+      toast.info("Attempting db query...");
 
       // the submit button just queries the whole db with no params... so no need to use FormData()
-      const { error, data } = (await QueryDbAction()) as any;
+      const { error, data } = await QueryDbAction();
 
       if (error) {
         console.log("error from data-table.tsx");
@@ -85,14 +86,12 @@ export default function MyData() {
               </tr>
             </thead>
             <tbody>
-              {weatherResults.map((_: object, i: number) => (
+              {weatherResults.map((record, i) => (
                 <tr key={i} className="border-t">
                   <td className="p-2">
-                    {new Date(weatherResults[i].timestamp).toLocaleString()}
+                    {new Date(record.timestamp).toLocaleString()}
                   </td>
-                  <td className="p-2">
-                    {weatherResults[i].temperature_2m?.toFixed(1)}
-                  </td>
+                  <td className="p-2">{record.temperature_2m?.toFixed(1)}</td>
                 </tr>
               ))}
             </tbody>

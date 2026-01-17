@@ -4,17 +4,14 @@ import { useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-// we are gonna access the session from the client
-
 // use rafc shortcut here!
 export const GetStartedButton = () => {
   // get session
-  // this is an example of getting the session on the client component; use the useSession() hook
-
-  // call the useSession() hook and destructure
+  // this is an example of getting the session on a client component; use the useSession() hook and destructure
   // RENAME the variable with `data: session` for clarity
-  // i think this differs to our server components, where you use getSession() and also have to pass in our headers
-  // this is a hook, therefore is not awaitable
+  // this differs from our server components, where you use getSession() and also have to pass in our headers
+  // no need for headers here; browser already has cookies
+  // this is a hook, therefore it is not awaitable
   const { data: session, isPending, error } = useSession();
   // more verbose equivalent to the above destructuring:
   //   const result = useSession();
@@ -34,7 +31,7 @@ export const GetStartedButton = () => {
     // this pending state is gonna be happening when the component hasn't mounted yet; we need the component to mount because we're working in the client component
     return (
       <Button size="lg" className="opacity-50">
-        Get Started
+        Loading...
       </Button>
     );
   }

@@ -38,7 +38,7 @@ export default function RootLayout({
             </h1>
 
             {children}
-            <p className="mt-4">&copy; JVT</p>
+            <p className="my-4">&copy; JVT</p>
           </div>
         </div>
 

@@ -1,8 +1,14 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { Weather } from "@/generated/prisma/client";
 
-export async function QueryDbAction() {
+type DbQueryType = {
+  error: string | null;
+  data: Weather[] | null;
+};
+
+export async function QueryDbAction(): Promise<DbQueryType> {
   // ------------------------------------------------
   // for debugging
   const currentDate = new Date();

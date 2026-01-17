@@ -41,24 +41,12 @@ TODO:
 - handle empty API responses?
 - validation
 - logging
-- fix CSS - things are overlapping
 - finish auth stuff?
 - prevent duplicates added to db
-- actually query db (we are only saving rn)
-- finish .env (github socials login)
-  - including prod env!
-- add wind data
-  - handle an ARRAY of `hourly` params, e.g. `["wind_speed_10m", "wind_direction_10m"]`
-  - update db schema
+- check: is the db query not showing everything from db in the table? why not?
 - fix toast msgs
 - clean up console.logs
 - flesh out readme
-
-TODOs for later:
-
-- mobile responsiveness
-- allow user to specify ERA5 etc
-- 
 
 ```sh
 # things i had to do (in probably the wrong order)

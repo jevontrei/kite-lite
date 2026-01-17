@@ -7,7 +7,7 @@ export default async function Weather() {
   // get session
   const headersList = await headers();
   const session = await auth.api.getSession({
-    // remember to pass in headers when you're on a server component
+    // remember to pass in headers when you're on a server component (the server doesn't have access to cookies unless it has the headers)
     headers: headersList,
   });
 
@@ -20,15 +20,12 @@ export default async function Weather() {
   // ------------------------------------------------
 
   // if session, the getInvolvedLink takes you to profile, otherwise it takes you to auth page
-  let getInvolvedLink;
-  let getInvolvedLinkName;
-  if (session) {
-    getInvolvedLink = "/profile";
-    getInvolvedLinkName = "Go to profile";
-  } else {
-    getInvolvedLink = "/auth/register";
-    getInvolvedLinkName = "Go to signup/login";
-  }
+  const { getInvolvedLink, getInvolvedLinkName } = session
+    ? { getInvolvedLink: "/profile", getInvolvedLinkName: "Go to profile" }
+    : {
+        getInvolvedLink: "/auth/register",
+        getInvolvedLinkName: "Go to signup/login",
+      };
 
   return (
     <>

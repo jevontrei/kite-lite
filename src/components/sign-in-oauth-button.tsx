@@ -38,7 +38,7 @@ export const SignInOauthButton = ({
     });
   }
 
-  const action = signUp ? "Up" : "In";
+  const action = signUp ? "up" : "in";
   const providerName = provider === "google" ? "Google" : "GitHub";
 
   // reusable component
