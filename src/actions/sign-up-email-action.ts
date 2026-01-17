@@ -55,7 +55,7 @@ export async function signUpEmailAction(formData: FormData) {
       switch (errCode) {
         // this case is like if you wanna be super secure and you don't want them to know that the email is taken; just give a generic msg
         case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
-          return { error: "Oops! Something went wrong. Please try again." };
+          return { error: "Oopsie! Something went wrong. Please try again." };
         default:
           return { error: err.message };
       }

@@ -25,7 +25,7 @@ export async function sendEmailAction({
   const mailOptions = {
     from: process.env.NODEMAILER_USER,
     to,
-    subject: `BetterAuthy - ${subject}`,
+    subject: `Kite Lite - ${subject}`,
     html: `
     <div style="${styles.container}">
         <h1 style="${styles.heading}">${subject}</h1>
