@@ -111,7 +111,8 @@ export default function SearchForecastForm() {
           placeholder="13.41"
         />
 
-        <Label htmlFor="start_date" className="mb-2">
+        {/* TODO: re-implement start_date and end_date */}
+        {/* <Label htmlFor="start_date" className="mb-2">
           Start date
         </Label>
         <Input
@@ -119,9 +120,9 @@ export default function SearchForecastForm() {
           id="start_date"
           name="start_date"
           placeholder="2024-12-12"
-        />
+        /> */}
 
-        <Label htmlFor="end_date" className="mb-2">
+        {/* <Label htmlFor="end_date" className="mb-2">
           End date
         </Label>
         <Input
@@ -129,7 +130,7 @@ export default function SearchForecastForm() {
           id="end_date"
           name="end_date"
           placeholder="2024-12-13"
-        />
+        /> */}
 
         <Label htmlFor="past_days" className="mb-2">
           Past days (optional)
@@ -144,7 +145,7 @@ export default function SearchForecastForm() {
         />
 
         <Label htmlFor="hourly" className="mb-2">
-          Hourly (not yet implemented)
+          Hourly parameter (not yet implemented)
         </Label>
         <Input
           type="text"
