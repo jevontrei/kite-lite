@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 // note that in the better auth tutorial, some of my action files are .action.ts and some are -action.ts... i think it doesn't technically matter, but you should choose one
 
 // define types for the return value of this action; to prevent annoying typescript complaints in search-forecast-form.tsx
-type WeatherDataType = {
+export type WeatherDataType = {
   time: Date[];
   temperature_2m: number[];
 };

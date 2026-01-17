@@ -6,12 +6,15 @@ import { Label } from "./ui/label";
 import { searchForecastAction } from "@/actions/search-forecast-action";
 import { useState } from "react";
 import { toast } from "sonner";
+import { WeatherDataType } from "@/actions/search-forecast-action";
 
 // rfc
 export default function SearchForecastForm() {
   // isPending is useful because of disabled={isPending}
   const [isPending, setIsPending] = useState(false);
-  const [weatherResults, setWeatherResults] = useState(null);
+  const [weatherResults, setWeatherResults] = useState<WeatherDataType | null>(
+    null,
+  );
 
   // ------------------------------------------------
   // for debugging
