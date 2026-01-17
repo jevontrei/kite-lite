@@ -90,7 +90,8 @@ const options = {
         if (!VALID_DOMAINS.includes(domain)) {
           // APIError is from "better-auth/api", NOT from "better-auth"
           throw new APIError("BAD_REQUEST", {
-            message: "Invalid domain. Please use a valid email.",
+            message:
+              "Invalid domain. Please use a valid email: @gmail.com, @yahoo.com, or @outlook.com",
           });
         }
 

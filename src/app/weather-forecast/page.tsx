@@ -30,6 +30,7 @@ export default async function Weather() {
   return (
     <>
       <h1 className="text-3xl font-bold">Forecast data</h1>
+      <p>Using the Open-Meteo API</p>
       <SearchForecastForm />
       <Link
         href={getInvolvedLink}
