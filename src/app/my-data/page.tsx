@@ -89,6 +89,7 @@ export default function MyData() {
         </div>
       )}
 
+      {/* why doesn't this table header appear when dbIsEmpty? it used to */}
       {weatherResults && (
         <div className="mt-8 max-h-96 overflow-y-auto border rounded">
           <table className="w-full">

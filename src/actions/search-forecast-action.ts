@@ -12,11 +12,17 @@ export type WeatherDataType = {
   temperature_2m: number[];
 };
 
-// pipe here ("|") is typescript union type? not a normal OR operator
-type ActionResultType = {
-  error: string | null;
-  data: WeatherDataType | null;
+type ActionSuccessType = {
+  error: null;
+  data: WeatherDataType;
 };
+type ActionErrorType = {
+  error: string;
+  data: null;
+};
+
+// the ~pipe here ("|") is typescript union type? not a normal OR operator
+type ActionResultType = ActionSuccessType | ActionErrorType;
 
 type WeatherRecordType = {
   latitude: number;
