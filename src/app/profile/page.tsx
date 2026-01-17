@@ -51,14 +51,14 @@ export default async function Page() {
         <SignOutButton />
       </div>
 
-      <div className="text-2x font-bold">Permissions</div>
+      {/* <div className="text-2x font-bold">Permissions</div> */}
 
-      <div className="space-x-4">
+      {/* <div className="space-x-4">
         <Button size="sm">MANAGE OWN POSTS</Button>
         <Button size="sm" disabled={!FULL_POST_ACCESS.success}>
           MANAGE ALL POSTS
         </Button>
-      </div>
+      </div> */}
 
       {session.user.image ? (
         // eslint-disable-next-line @next/next/no-img-element

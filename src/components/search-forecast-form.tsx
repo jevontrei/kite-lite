@@ -133,7 +133,7 @@ export default function SearchForecastForm() {
         /> */}
 
         <Label htmlFor="past_days" className="mb-2">
-          Past days (optional)
+          Past days (up to 92) (optional)
         </Label>
         <Input
           type="number"
@@ -144,7 +144,7 @@ export default function SearchForecastForm() {
           placeholder="0"
         />
 
-        <Label htmlFor="hourly" className="mb-2">
+        {/* <Label htmlFor="hourly" className="mb-2">
           Hourly parameter (not yet implemented)
         </Label>
         <Input
@@ -153,7 +153,7 @@ export default function SearchForecastForm() {
           name="hourly"
           placeholder="temperature_2m"
           disabled
-        />
+        /> */}
 
         <div className="mt-4">
           <i>
