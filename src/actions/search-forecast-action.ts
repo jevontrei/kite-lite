@@ -12,6 +12,7 @@ export type WeatherDataType = {
   temperature_2m: number[];
 };
 
+// i find this pattern of types very cool... much better than what i had before, e.g. `error: string | null`
 type ActionSuccessType = {
   error: null;
   data: WeatherDataType;
@@ -176,6 +177,7 @@ export async function searchForecastAction(
       `\nSaved ${weatherRecords.length} weather records to database\n`,
     );
 
+    // return data to browser
     return {
       error: null,
       data: weatherData.hourly,

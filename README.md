@@ -3,7 +3,7 @@
 
 JVT - December 2025
 
-https://kite-lite-yevt.vercel.app/
+https://wylion.vercel.app/
 
 A web app for fetching misc weather data and doing misc things with it.
 
@@ -27,7 +27,7 @@ Stack:
 
 Figma:
 
-https://www.figma.com/board/CqYAM5wWt5XM3BmqJBZg25/kite-lite?node-id=0-1&p=f&t=yAcRY6sAKTvsGFw4-0
+https://www.figma.com/board/CqYAM5wWt5XM3BmqJBZg25/wylion?node-id=0-1&p=f&t=yAcRY6sAKTvsGFw4-0
 
 Notes to self:
 
@@ -35,7 +35,7 @@ Notes to self:
 
 TODO:
 
-- apply joel.ipynb principles
+- apply `joel.ipynb` principles
 - error handling
 - error types?
 - fix the broken account linking, including toasts

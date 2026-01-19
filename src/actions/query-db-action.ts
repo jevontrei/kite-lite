@@ -28,6 +28,7 @@ export async function QueryDbAction(): Promise<DbQueryType> {
     const dbResponse = await prisma.weather.findMany();
     // const weatherData = dbResponse
 
+    // return data to browser
     return {
       error: null,
       data: dbResponse, // or weatherResults?
